@@ -1,8 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { BasicsView } from "../views";
+import { AddPartyView } from "../views";
 
-const Basics: NextPage = (props) => {
+const AddParty: NextPage = (props) => {
   return (
     <div>
       <Head>
@@ -12,9 +12,9 @@ const Basics: NextPage = (props) => {
           content="Basic Functionality"
         />
       </Head>
-      <BasicsView />
+      <AddPartyView />
     </div>
   );
 };
 
-export default Basics;
+export default AddParty;

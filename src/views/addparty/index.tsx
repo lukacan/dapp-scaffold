@@ -1,10 +1,9 @@
 
 import { FC } from "react";
-import { SignMessage } from '../../components/SignMessage';
-import { JanecekMethod } from '../../components/janecek_method';
+import { CreateParty } from '../../components/AddParty';
 
 
-export const BasicsView: FC = ({ }) => {
+export const AddPartyView: FC = ({ }) => {
 
   return (
     <div className="md:hero mx-auto p-4">
@@ -14,7 +13,7 @@ export const BasicsView: FC = ({ }) => {
         </h1>
         {/* CONTENT GOES HERE */}
         <div className="text-center">
-          <JanecekMethod/>
+          <CreateParty/>
         </div>
       </div>
     </div>
