@@ -1,10 +1,10 @@
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
-import { FC, useState  } from 'react';
+import { FC, useState } from 'react';
 import * as assert from "assert";
 
-import {Program, AnchorProvider, web3, utils, AnchorError} from "@project-serum/anchor"
+import { Program, AnchorProvider, web3, utils, AnchorError } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
-import {PublicKey } from '@solana/web3.js';
+import { PublicKey } from '@solana/web3.js';
 
 
 const idl_string = JSON.stringify(idl)
@@ -13,46 +13,49 @@ const programID = new PublicKey(idl_object.metadata.address)
 
 export const CreateParty: FC = () => {
     const ourWallet = useWallet();
-    const {connection} = useConnection();
+    const { connection } = useConnection();
     const [partyName, setPartyName] = useState('');
     const [createdParty, setCreatedParty] = useState('');
 
 
     const getProvider = () => {
         const provider = new AnchorProvider(connection,
-                                            ourWallet,
-                                            AnchorProvider.defaultOptions())
+            ourWallet,
+            AnchorProvider.defaultOptions())
         return provider
     }
 
-    const createParty = async () =>{
+    const createParty = async () => {
         try {
             console.log("Creating party")
-            
+
             const provider = getProvider()
-            const program = new Program(idl_object,programID,provider)
+            const program = new Program(idl_object, programID, provider)
 
 
-            const [party,bump] = await PublicKey.findProgramAddressSync([
+            const [party, bump] = await PublicKey.findProgramAddressSync([
                 utils.bytes.utf8.encode(partyName),
-            ],program.programId)
+            ], program.programId)
 
+
+            /*
+                GetAccountInfo will fetch account based on publicKey, it is not problem here
+                because pda create uniquq address for parties based on their names. 
+            */
             const info = await program.provider.connection.getAccountInfo(party);
 
-            if(info != null)
-            {
+            if (info != null) {
                 setCreatedParty("Party with this name already exists.");
             }
-            else
-            {
-                await program.rpc.createParty(partyName,{
-                    accounts:{
+            else {
+                await program.rpc.createParty(partyName, {
+                    accounts: {
                         author: provider.wallet.publicKey,
                         party: party,
                         systemProgram: web3.SystemProgram.programId,
                     }
                 })
-    
+
                 //console.log("New party created: " + party.toString())
                 setCreatedParty("New party created: " + partyName + ".");
             }
@@ -72,12 +75,11 @@ export const CreateParty: FC = () => {
 
         setTimeout(() => {
             setCreatedParty('');
-          }, 2000);
+        }, 2000);
     }
 
     return (
         <>
-
             <div className="flex flex-row justify-center">
                 <input
                     type="text"
@@ -91,15 +93,15 @@ export const CreateParty: FC = () => {
                         className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                         onClick={createParty} disabled={!ourWallet.publicKey || !partyName}
                     >
-                    {!ourWallet.publicKey && (
-                        <div className="block w-60 m-2 text-black">Wallet not connected</div>
-                    )}
-                    {ourWallet.publicKey && !partyName && (
-                        <div className="block w-60 m-2 text-black">Please enter party name</div>
-                    )}
-                    {ourWallet.publicKey && partyName && (
-                        <div className="block w-60 m-2 text-black">Create Party</div>
-                    )}
+                        {!ourWallet.publicKey && (
+                            <div className="block w-60 m-2 text-black">Wallet not connected</div>
+                        )}
+                        {ourWallet.publicKey && !partyName && (
+                            <div className="block w-60 m-2 text-black">Please enter party name</div>
+                        )}
+                        {ourWallet.publicKey && partyName && (
+                            <div className="block w-60 m-2 text-black">Create Party</div>
+                        )}
                     </button>
                 </div>
             </div>

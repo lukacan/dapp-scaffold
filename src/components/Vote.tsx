@@ -98,7 +98,7 @@ export const Vote: FC = () => {
                     <div className='md:hero-content flex flex-col'>
                         <h1>{"Party name: " + party.name.toString()}</h1>
                         <span>{"Party owner: " + party.author.toString()}</span>
-                        <span>{"Votes: " + party.votes}</span>
+                        <span>{"Votes: " + party.votes.toString()}</span>
                         <div className="flex flex-row justify-center">
                             <button
                                 className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
