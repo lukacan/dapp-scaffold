@@ -45,7 +45,7 @@ export const CreateParty: FC = () => {
             const info = await program.provider.connection.getAccountInfo(party);
 
             if (info != null) {
-                setCreatedParty("Party with this name already exists.");
+                setCreatedParty("Name already exists");
             }
             else {
                 await program.rpc.createParty(partyName, {
@@ -57,7 +57,7 @@ export const CreateParty: FC = () => {
                 })
 
                 //console.log("New party created: " + party.toString())
-                setCreatedParty("New party created: " + partyName + ".");
+                setCreatedParty("Party created");
             }
 
 
@@ -79,7 +79,14 @@ export const CreateParty: FC = () => {
     }
 
     return (
-        <>
+        <><div className="relative group">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
+            <div className="mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
+                <pre data-prefix=">">
+                    <code className="truncate">{"Create Party, but the name has to be UNIQUE !!!"} </code>
+                </pre>
+            </div>
+        </div>
             <div className="flex flex-row justify-center">
                 <input
                     type="text"
@@ -93,21 +100,29 @@ export const CreateParty: FC = () => {
                         className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                         onClick={createParty} disabled={!ourWallet.publicKey || !partyName}
                     >
-                        {!ourWallet.publicKey && (
-                            <div className="block w-60 m-2 text-black">Wallet not connected</div>
+                        {!createdParty && !ourWallet.publicKey && (
+                            <pre data-prefix=">">
+                                <code className="truncate">{"Wallet not connected"} </code>
+                            </pre>
                         )}
-                        {ourWallet.publicKey && !partyName && (
-                            <div className="block w-60 m-2 text-black">Please enter party name</div>
+                        {!createdParty && ourWallet.publicKey && partyName && (
+                            <pre data-prefix=">">
+                                <code className="truncate">{"Create Party"} </code>
+                            </pre>
                         )}
-                        {ourWallet.publicKey && partyName && (
-                            <div className="block w-60 m-2 text-black">Create Party</div>
+                        {createdParty && (
+                            <pre data-prefix=">">
+                                <code className="truncate">{`${createdParty}`} </code>
+                            </pre>
+                        )}
+                        {!createdParty && ourWallet.publicKey && !partyName && (
+                            <pre data-prefix=">">
+                                <code className="truncate">{"Please enter party name"} </code>
+                            </pre>
                         )}
                     </button>
                 </div>
             </div>
-            {createdParty && (
-                <div className="mt-2 text-white-500 animate-fade-out">{`${createdParty}`}</div>
-            )}
         </>
 
     );

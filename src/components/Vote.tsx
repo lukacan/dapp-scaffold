@@ -188,13 +188,19 @@ export const Vote: FC = () => {
                                 onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
                             >
                                 {!voted_p && !ourWallet.publicKey && (
-                                    <div className="block w-60 m-2 text-black">Wallet not connected</div>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Wallet not connected"} </code>
+                                    </pre>
                                 )}
                                 {!voted_p && ourWallet.publicKey && (
-                                    <div className="block w-60 m-2 text-black">Vote Positive</div>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Vote Positive"} </code>
+                                    </pre>
                                 )}
                                 {voted_p && (
-                                    <div className="block w-60 m-2 text-black">{`${voted_p}`}</div>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{`${voted_p}`} </code>
+                                    </pre>
                                 )}
                             </button>
                             <button
@@ -202,13 +208,19 @@ export const Vote: FC = () => {
                                 onClick={() => voteNegative(party.name.toString())} disabled={!ourWallet.publicKey}
                             >
                                 {!voted_n && !ourWallet.publicKey && (
-                                    <div className="block w-60 m-2 text-black">Wallet not connected</div>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Wallet not connected"} </code>
+                                    </pre>
                                 )}
                                 {!voted_n && ourWallet.publicKey && (
-                                    <div className="block w-60 m-2 text-black">Vote Negative</div>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Vote Negative"} </code>
+                                    </pre>
                                 )}
                                 {voted_n && (
-                                    <div className="block w-60 m-2 text-black">{`${voted_n}`}</div>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{`${voted_n}`} </code>
+                                    </pre>
                                 )}
                             </button>
                         </div>
@@ -222,9 +234,9 @@ export const Vote: FC = () => {
                         className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                         onClick={listParties}
                     >
-                        <span className="block group-disabled:hidden" >
-                            List all parties
-                        </span>
+                        <pre data-prefix=">">
+                            <code className="truncate">{"List all parties"} </code>
+                        </pre>
                     </button>
                 </div>
             </div>
@@ -245,10 +257,14 @@ export const Vote: FC = () => {
                         onClick={listParty} disabled={!partyName}
                     >
                         {!partyName && (
-                            <div className="block w-60 m-2 text-black">Enter party name</div>
+                            <pre data-prefix=">">
+                                <code className="truncate">{"Enter party name"} </code>
+                            </pre>
                         )}
                         {partyName && (
-                            <div className="block w-60 m-2 text-black">Find party</div>
+                            <pre data-prefix=">">
+                                <code className="truncate">{"Find party"} </code>
+                            </pre>
                         )}
                     </button>
                 </div>

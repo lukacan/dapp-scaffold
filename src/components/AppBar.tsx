@@ -60,15 +60,16 @@ export const AppBar: React.FC = () => {
               navigationStarts={() => setIsNavOpen(false)}
             />
             <NavElement
-              label="Add Party"
-              href="/addparty"
-              navigationStarts={() => setIsNavOpen(false)}
-            />
-            <NavElement
               label="Vote"
               href="/vote"
               navigationStarts={() => setIsNavOpen(false)}
             />
+            <NavElement
+              label="Add Party"
+              href="/addparty"
+              navigationStarts={() => setIsNavOpen(false)}
+            />
+
             <NavElement
               label="Add Voter"
               href="/addvoter"
