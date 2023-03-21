@@ -112,12 +112,11 @@ export const Vote: FC = () => {
 
             setVotedP("Voted")
         } catch (error) {
-            if (error instanceof AnchorError)
-            {
+            if (error instanceof AnchorError) {
                 setVotedP((error as AnchorError)
-                .error.errorMessage)
+                    .error.errorMessage)
             }
-            else{
+            else {
                 console.log(error)
                 setVotedP("Error")
             }
@@ -156,12 +155,11 @@ export const Vote: FC = () => {
 
             setVotedN("Voted")
         } catch (error) {
-            if (error instanceof AnchorError)
-            {
+            if (error instanceof AnchorError) {
                 setVotedN((error as AnchorError)
-                .error.errorMessage)
+                    .error.errorMessage)
             }
-            else{
+            else {
                 console.log(error)
                 setVotedN("Error")
             }
