@@ -20,6 +20,8 @@ export const Vote: FC = () => {
     const { connection } = useConnection();
     const [partyName, setPartyName] = useState('');
     const [parties, setParties] = useState([])
+    const [voted_p, setVotedP] = useState('')
+    const [voted_n, setVotedN] = useState('')
 
 
     const getProvider = () => {
@@ -36,6 +38,8 @@ export const Vote: FC = () => {
             const provider = getProvider()
             const program = new Program(idl_object, programID, provider)
 
+            // check na velkost structu mi pride trochu ehm
+            // asi by to chcelo lepsi check
             Promise.all((await connection.getProgramAccounts(programID,
                 {
                     filters: [
@@ -67,12 +71,11 @@ export const Vote: FC = () => {
             ], program.programId)
 
             const accountInfo = await connection.getAccountInfo(party)
-            if (accountInfo == null)
-            {
+            if (accountInfo == null) {
                 console.log("Party does not exist.")
                 setParties([])
             }
-            else{
+            else {
                 const fetched_party = await program.account.party.fetch(party)
                 setParties([fetched_party])
             }
@@ -81,11 +84,15 @@ export const Vote: FC = () => {
         }
     }
 
-    const votePositive = async (publicKey) => {
+    const votePositive = async (name) => {
         console.log("Voting Positive")
 
         const provider = getProvider()
         const program = new Program(idl_object, programID, provider)
+
+        const [party, bump] = await PublicKey.findProgramAddressSync([
+            utils.bytes.utf8.encode(name),
+        ], program.programId)
 
         try {
             const [voter, bump] = await PublicKey.findProgramAddressSync([
@@ -97,21 +104,32 @@ export const Vote: FC = () => {
             await program.rpc.votePositive({
                 accounts: {
                     voter: voter,
-                    author:provider.wallet.publicKey,
-                    party: publicKey,
+                    author: provider.wallet.publicKey,
+                    party: party,
                     systemProgram: web3.SystemProgram.programId,
                 }
             })
+
+            setVotedP("Successfuly voted positive for: " + name)
         } catch (error) {
             console.log(error)
+            setVotedP("Error")
         }
+
+        setTimeout(() => {
+            setVotedP('');
+        }, 2000);
     }
 
-    const voteNegative = async (publicKey) => {
+    const voteNegative = async (name) => {
         console.log("Voting Negative")
 
         const provider = getProvider()
         const program = new Program(idl_object, programID, provider)
+
+        const [party, bump] = await PublicKey.findProgramAddressSync([
+            utils.bytes.utf8.encode(name),
+        ], program.programId)
 
         try {
             const [voter, bump] = await PublicKey.findProgramAddressSync([
@@ -123,14 +141,21 @@ export const Vote: FC = () => {
             await program.rpc.voteNegative({
                 accounts: {
                     voter: voter,
-                    author:provider.wallet.publicKey,
-                    party: publicKey,
+                    author: provider.wallet.publicKey,
+                    party: party,
                     systemProgram: web3.SystemProgram.programId,
                 }
             })
+
+            setVotedN("Successfuly voted negative for: " + name)
         } catch (error) {
             console.log(error)
+            setVotedN("Error")
         }
+
+        setTimeout(() => {
+            setVotedN('');
+        }, 2000);
     }
 
 
@@ -146,28 +171,33 @@ export const Vote: FC = () => {
                         <div className="flex flex-row justify-center">
                             <button
                                 className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
-                                onClick={() => votePositive(party.pubkey)} disabled={!ourWallet.publicKey}
+                                onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
                             >
-                                {!ourWallet.publicKey && (
+                                {!voted_p && !ourWallet.publicKey && (
                                     <div className="block w-60 m-2 text-black">Wallet not connected</div>
                                 )}
-                                {ourWallet.publicKey && (
+                                {!voted_p && ourWallet.publicKey && (
                                     <div className="block w-60 m-2 text-black">Vote Positive</div>
+                                )}
+                                {voted_p && (
+                                    <div className="block w-60 m-2 text-black">{`${voted_p}`}</div>
                                 )}
                             </button>
                             <button
                                 className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
-                                onClick={() => voteNegative(party.pubkey)} disabled={!ourWallet.publicKey}
+                                onClick={() => voteNegative(party.name.toString())} disabled={!ourWallet.publicKey}
                             >
-                                {!ourWallet.publicKey && (
+                                {!voted_n && !ourWallet.publicKey && (
                                     <div className="block w-60 m-2 text-black">Wallet not connected</div>
                                 )}
-                                {ourWallet.publicKey && (
+                                {!voted_n && ourWallet.publicKey && (
                                     <div className="block w-60 m-2 text-black">Vote Negative</div>
+                                )}
+                                {voted_n && (
+                                    <div className="block w-60 m-2 text-black">{`${voted_n}`}</div>
                                 )}
                             </button>
                         </div>
-
                     </div>
                 )
             })}
