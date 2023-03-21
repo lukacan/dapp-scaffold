@@ -42,12 +42,10 @@ export const AddVoter: FC = () => {
 
             const accountInfo = await connection.getAccountInfo(voter)
 
-            if(accountInfo != null)
-            {
-                setCreatedVoter("Voter already in use !!! :(.")
+            if (accountInfo != null) {
+                setCreatedVoter("Voter already in use !!!")
             }
-            else
-            {
+            else {
                 await program.rpc.createVoter({
                     accounts: {
                         author: provider.wallet.publicKey,
@@ -71,9 +69,13 @@ export const AddVoter: FC = () => {
 
     return (
         <>
+            <h3 className="md:w-full text-2x1 md:text-4xl text-center text-slate-300 my-2">
+                <p className='text-slate-500 text-2x1 leading-relaxed'>Connect your wallet and register as voter.</p>
+            </h3>
             <div className="flex flex-row justify-center">
                 <div className="relative group items-center">
                     <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-fuchsia-500 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+
                     <button
                         className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                         onClick={addVoter} disabled={!ourWallet.publicKey}

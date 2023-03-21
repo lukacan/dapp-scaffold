@@ -162,12 +162,26 @@ export const Vote: FC = () => {
 
     return (
         <>
+
+
             {parties.map((party) => {
                 return (
                     <div className='md:hero-content flex flex-col'>
-                        <h1>{"Party name: " + party.name.toString()}</h1>
-                        <span>{"Party owner: " + party.author.toString()}</span>
-                        <span>{"Votes: " + party.votes.toString()}</span>
+                        <div className="relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
+                            <div className="mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"Party name: " + party.name.toString()} </code>
+                                </pre>
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"Party owner: " + party.author.toString()} </code>
+                                </pre>
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"Votes: " + party.votes.toString()} </code>
+                                </pre>
+                            </div>
+                        </div>
+
                         <div className="flex flex-row justify-center">
                             <button
                                 className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
