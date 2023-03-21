@@ -26,53 +26,51 @@ export const CreateParty: FC = () => {
     }
 
     const createParty = async () => {
-        try {
-            console.log("Creating party")
-
-            const provider = getProvider()
-            const program = new Program(idl_object, programID, provider)
-
-
-            const [party, bump] = await PublicKey.findProgramAddressSync([
-                utils.bytes.utf8.encode(partyName),
-            ], program.programId)
-
-
-            /*
-                GetAccountInfo will fetch account based on publicKey, it is not problem here
-                because pda create uniquq address for parties based on their names. 
-            */
-            const info = await program.provider.connection.getAccountInfo(party);
-
-            if (info != null) {
-                setCreatedParty("Name already exists");
-            }
-            else {
-                await program.rpc.createParty(partyName, {
-                    accounts: {
-                        author: provider.wallet.publicKey,
-                        party: party,
-                        systemProgram: web3.SystemProgram.programId,
-                    }
-                })
-
-                //console.log("New party created: " + party.toString())
-                setCreatedParty("Party created");
-            }
-
-
-
-
-        } catch (error) {
-            // //assert.ok(error instanceof AnchorError);
-            // if ((error as AnchorError).error.errorCode.code == "NameTooLong")
-            // {
-            //     setCreatedParty((error as AnchorError).error.errorMessage);
-            // }
-            console.error("Error while creating party: " + error)
-
+        if (partyName.length > 32){
+            setCreatedParty("Name too long");
         }
-
+        else
+        {
+            try {
+                console.log("Creating party")
+    
+                const provider = getProvider()
+                const program = new Program(idl_object, programID, provider)
+    
+    
+                const [party, bump] = await PublicKey.findProgramAddressSync([
+                    utils.bytes.utf8.encode(partyName),
+                ], program.programId)
+    
+    
+                /*
+                    GetAccountInfo will fetch account based on publicKey, it is not problem here
+                    because pda create uniquq address for parties based on their names. 
+                */
+                const info = await program.provider.connection.getAccountInfo(party);
+    
+                if (info != null) {
+                    setCreatedParty("Name already exists");
+                }
+                else {
+                    await program.rpc.createParty(partyName, {
+                        accounts: {
+                            author: provider.wallet.publicKey,
+                            party: party,
+                            systemProgram: web3.SystemProgram.programId,
+                        }
+                    })
+    
+                    //console.log("New party created: " + party.toString())
+                    setCreatedParty("Party created");
+                }
+    
+            } catch (error) {
+                setCreatedParty("Error occured");
+                console.error(error)
+    
+            }   
+        }
         setTimeout(() => {
             setCreatedParty('');
         }, 2000);

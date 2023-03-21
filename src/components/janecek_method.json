@@ -172,17 +172,22 @@
     {
       "code": 6000,
       "name": "NameTooLong",
-      "msg": "Party Name Too Long"
+      "msg": "Max name length exceeded"
     },
     {
       "code": 6001,
-      "name": "PermissionDenied",
-      "msg": "Only admin can add new Voters"
+      "name": "NoTwoToOneParty",
+      "msg": "No 2 positive votes to one party"
     },
     {
       "code": 6002,
-      "name": "NotAllowedOperation",
-      "msg": "Operation not allowed"
+      "name": "VotePosFirst",
+      "msg": "Vote positive first"
+    },
+    {
+      "code": 6003,
+      "name": "NotAbleToVote",
+      "msg": "Not able to vote"
     }
   ],
   "metadata": {

@@ -110,10 +110,17 @@ export const Vote: FC = () => {
                 }
             })
 
-            setVotedP("Successfuly voted positive for: " + name)
+            setVotedP("Voted")
         } catch (error) {
-            console.log(error)
-            setVotedP("Error")
+            if (error instanceof AnchorError)
+            {
+                setVotedP((error as AnchorError)
+                .error.errorMessage)
+            }
+            else{
+                console.log(error)
+                setVotedP("Error")
+            }
         }
 
         setTimeout(() => {
@@ -147,10 +154,17 @@ export const Vote: FC = () => {
                 }
             })
 
-            setVotedN("Successfuly voted negative for: " + name)
+            setVotedN("Voted")
         } catch (error) {
-            console.log(error)
-            setVotedN("Error")
+            if (error instanceof AnchorError)
+            {
+                setVotedN((error as AnchorError)
+                .error.errorMessage)
+            }
+            else{
+                console.log(error)
+                setVotedN("Error")
+            }
         }
 
         setTimeout(() => {
