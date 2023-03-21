@@ -32,14 +32,14 @@
       "name": "createVoter",
       "accounts": [
         {
-          "name": "admin",
+          "name": "author",
           "isMut": true,
           "isSigner": true
         },
         {
           "name": "voter",
           "isMut": true,
-          "isSigner": true
+          "isSigner": false
         },
         {
           "name": "systemProgram",
@@ -53,9 +53,14 @@
       "name": "votePositive",
       "accounts": [
         {
-          "name": "voter",
+          "name": "author",
           "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "voter",
+          "isMut": true,
+          "isSigner": false
         },
         {
           "name": "party",
@@ -74,9 +79,14 @@
       "name": "voteNegative",
       "accounts": [
         {
-          "name": "voter",
+          "name": "author",
           "isMut": true,
           "isSigner": true
+        },
+        {
+          "name": "voter",
+          "isMut": true,
+          "isSigner": false
         },
         {
           "name": "party",
@@ -127,6 +137,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "author",
+            "type": "publicKey"
+          },
+          {
             "name": "numVotes",
             "type": "i8"
           },
@@ -145,6 +159,10 @@
           {
             "name": "neg",
             "type": "publicKey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
           }
         ]
       }

@@ -4,24 +4,16 @@ import * as assert from "assert";
 
 import { Program, AnchorProvider, web3, utils, AnchorError, TransactionFn } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
-import { PublicKey, Keypair, Transaction  } from '@solana/web3.js';
+import { PublicKey, Keypair, Transaction } from '@solana/web3.js';
 
 
 const idl_string = JSON.stringify(idl)
 const idl_object = JSON.parse(idl_string)
 const programID = new PublicKey(idl_object.metadata.address)
 
-const admin = new PublicKey("G6ScTg7oSQPoKv6WtikLJeFgnE85TJBCPFAaiha7qbzJ")
-
 
 
 export const AddVoter: FC = () => {
-    let admin_secretKey = Uint8Array.from([206,146,51,36,247,155,237,189,223,
-        244,222,196,51,107,85,193,76,22,132,33,97,251,158,85,93,55,197,87,
-        122,101,145,176,224,68,42,180,144,146,5,12,50,29,187,121,160,8,189,
-        245,198,249,155,243,106,173,77,196,113,211,235,27,128,134,150,195]);
-    
-    let admin_keypair = Keypair.fromSecretKey(admin_secretKey);
 
 
     const ourWallet = useWallet();
@@ -43,51 +35,31 @@ export const AddVoter: FC = () => {
             const provider = getProvider()
             const program = new Program(idl_object, programID, provider)
 
-            const accounts = await connection.getProgramAccounts(programID,
-                {
-                    filters: [
-                        {
-                            dataSize: 200,
-                        },
-                        {
-                            memcmp: {
-                                offset: 8,
-                                bytes: provider.wallet.publicKey.toString()
-                            }
-                        }
-                    ],
-                })
+            const [voter, bump] = await PublicKey.findProgramAddressSync([
+                utils.bytes.utf8.encode("new_voter"),
+                provider.wallet.publicKey.toBytes()
+            ], program.programId)
 
-            console.log(provider.wallet.publicKey.toString())
-            if (accounts.length != 0) {
-                setCreatedVoter("This wallet is already registered as voter.")
+            const accountInfo = await connection.getAccountInfo(voter)
+
+            if(accountInfo != null)
+            {
+                setCreatedVoter("Voter already in use !!! :(.")
             }
-            else {
-                const transaction = program.transaction.createVoter({
-                    accounts:{
-                        admin: admin_keypair.publicKey,
-                        voter: provider.wallet.publicKey,
-                        systemProgram: web3.SystemProgram.programId
+            else
+            {
+                await program.rpc.createVoter({
+                    accounts: {
+                        author: provider.wallet.publicKey,
+                        voter: voter,
+                        systemProgram: web3.SystemProgram.programId,
                     }
-                }).sign();
-                // const transaction = new TransactionF().add(
-                    
-                //     provider.connection.tr
-                    
-                //     program.methods.createVoter().accounts({
-                //         admin: admin_keypair.publicKey,
-                //         voter: provider.wallet.publicKey,
-                //         systemProgram: web3.SystemProgram.programId
-                //     })
-                // ) 
+                })
 
                 setCreatedVoter("You are now ready to vote !!! :) .")
             }
-
-
         } catch (error) {
-
-            console.error(error)
+            console.log(error)
         }
 
 
@@ -106,6 +78,9 @@ export const AddVoter: FC = () => {
                         className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                         onClick={addVoter} disabled={!ourWallet.publicKey}
                     >
+                        {!ourWallet.publicKey && (
+                            <div className="block w-60 m-2 text-black">Wallet not connected</div>
+                        )}
                         <span className="block group-disabled:hidden" >
                             Add Voter
                         </span>
