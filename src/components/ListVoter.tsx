@@ -64,37 +64,50 @@ export const ListVoter: FC = () => {
         <>
             <div className="relative group">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
-                <div className="mockup-code bg-primary border-3 border-[#5252529f] p-6 px-4 my-4 text-left">
+                <div className="mx-auto mockup-code bg-primary border-3 border-[#5252529f] p-6 px-4 my-4 text-left">
                     {!voterStats && (
-                        <>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Connect your wallet and check your voter stats"} </code>
-                            </pre>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Can vote: ..."} </code>
-                            </pre>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Free votes: ..."} </code>
-                            </pre>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"..."} </code>
-                            </pre>
-                        </>
+                        <div className="typing-animation">
+                            <h1>
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"Connect your wallet and check your voter stats"} </code>
+                                </pre>
+                            </h1>
+                            <h1>
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"Free votes: ..."} </code>
+                                </pre>
+                            </h1>
+                            <h1>
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"..."} </code>
+                                </pre>
+                            </h1>
+                        </div>
                     )}
                     {voterStats && (
                         <>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Can vote: " + `${voterStats.canVote}`} </code>
-                            </pre>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"First positive vote: " + `${voterStats.pos1}`} </code>
-                            </pre>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Second positive vote: " + `${voterStats.pos2}`} </code>
-                            </pre>
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Negative vote: " + `${voterStats.neg}`} </code>
-                            </pre>
+                            <div className="typing-animation">
+                                <h1>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Can vote: " + `${voterStats.canVote}`} </code>
+                                    </pre>
+                                </h1>
+                                <h1>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"First positive vote: " + `${voterStats.pos1}`} </code>
+                                    </pre>
+                                </h1>
+                                <h1>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Second positive vote: " + `${voterStats.pos2}`} </code>
+                                    </pre>
+                                </h1>
+                                <h1>
+                                    <pre data-prefix=">">
+                                        <code className="truncate">{"Negative vote: " + `${voterStats.neg}`} </code>
+                                    </pre>
+                                </h1>
+                            </div>
                         </>
                     )}
                 </div>

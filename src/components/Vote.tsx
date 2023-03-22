@@ -182,15 +182,23 @@ export const Vote: FC = () => {
                         <div className="relative group">
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
                             <div className="mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
-                                <pre data-prefix=">">
-                                    <code className="truncate">{"Party name: " + party.name.toString()} </code>
-                                </pre>
-                                <pre data-prefix=">">
-                                    <code className="truncate">{"Party owner: " + party.author.toString()} </code>
-                                </pre>
-                                <pre data-prefix=">">
-                                    <code className="truncate">{"Votes: " + party.votes.toString()} </code>
-                                </pre>
+                                <div className="typing-animation">
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Party name: " + party.name.toString()} </code>
+                                        </pre>
+                                    </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Party owner: " + party.author.toString()} </code>
+                                        </pre>
+                                    </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Votes: " + party.votes.toString()} </code>
+                                        </pre>
+                                    </h1>
+                                </div>
                             </div>
                         </div>
 

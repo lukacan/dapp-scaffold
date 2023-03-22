@@ -1,6 +1,5 @@
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { FC, useState } from 'react';
-import * as assert from "assert";
 
 import { Program, AnchorProvider, web3, utils, AnchorError } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
@@ -26,29 +25,28 @@ export const CreateParty: FC = () => {
     }
 
     const createParty = async () => {
-        if (partyName.length > 32){
+        if (partyName.length > 32) {
             setCreatedParty("Name too long");
         }
-        else
-        {
+        else {
             try {
                 console.log("Creating party")
-    
+
                 const provider = getProvider()
                 const program = new Program(idl_object, programID, provider)
-    
-    
+
+
                 const [party, bump] = await PublicKey.findProgramAddressSync([
                     utils.bytes.utf8.encode(partyName),
                 ], program.programId)
-    
-    
+
+
                 /*
                     GetAccountInfo will fetch account based on publicKey, it is not problem here
                     because pda create uniquq address for parties based on their names. 
                 */
                 const info = await program.provider.connection.getAccountInfo(party);
-    
+
                 if (info != null) {
                     setCreatedParty("Name already exists");
                 }
@@ -60,16 +58,16 @@ export const CreateParty: FC = () => {
                             systemProgram: web3.SystemProgram.programId,
                         }
                     })
-    
+
                     //console.log("New party created: " + party.toString())
                     setCreatedParty("Party created");
                 }
-    
+
             } catch (error) {
                 setCreatedParty("Error occured");
                 console.error(error)
-    
-            }   
+
+            }
         }
         setTimeout(() => {
             setCreatedParty('');
@@ -77,14 +75,21 @@ export const CreateParty: FC = () => {
     }
 
     return (
-        <><div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
-            <div className="mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
-                <pre data-prefix=">">
-                    <code className="truncate">{"Create Party, but the name has to be UNIQUE !!!"} </code>
-                </pre>
-            </div>
-        </div>
+        <>
+            <h4 className="text-1x1 md:text-1xl text-center text-slate-300 my-2">
+                <div className="relative group">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
+                    <div className="mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
+                        <div className="typing-animation">
+                            <h1>
+                                <pre data-prefix=">">
+                                    <code className="truncate">{"Create Party, but the name has to be UNIQUE !!!"} </code>
+                                </pre>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </h4>
             <div className="flex flex-row justify-center">
                 <input
                     type="text"
@@ -98,11 +103,11 @@ export const CreateParty: FC = () => {
                         className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
                         onClick={createParty} disabled={!ourWallet.publicKey || !partyName}
                     >
-                        {!createdParty && !ourWallet.publicKey && (
+                        {!createdParty && !ourWallet.publicKey &&
                             <pre data-prefix=">">
                                 <code className="truncate">{"Wallet not connected"} </code>
                             </pre>
-                        )}
+                        }
                         {!createdParty && ourWallet.publicKey && partyName && (
                             <pre data-prefix=">">
                                 <code className="truncate">{"Create Party"} </code>

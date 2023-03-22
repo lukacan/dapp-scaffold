@@ -40,27 +40,43 @@ export const HomeView: FC = ({ }) => {
           <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
             <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Everyone can register a subject (e.g. political party)`} </code>
-              </pre>
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Everyone can list registered subjects`} </code>
-              </pre>
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Everyone can see subject’s results`} </code>
-              </pre>
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Everyone can add yourself as eligible voter`} </code>
-              </pre>
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Every voter has 2 positive and 1 negative vote`} </code>
-              </pre>
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Both positive votes can’t be given to the same subject`} </code>
-              </pre>
-              <pre data-prefix=">">
-                <code className="truncate" style={{ fontSize: '10px' }}>{`Negative vote can be used only after 2 positive votes`} </code>
-              </pre>
+              <div className="typing-animation">
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Everyone can register a subject (e.g. political party)"} </code>
+                  </pre>
+                </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Everyone can list registered subjects"} </code>
+                  </pre>
+                </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Everyone can see subject’s results"} </code>
+                  </pre>
+                </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Everyone can add yourself as eligible voter"} </code>
+                  </pre>
+                </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Every voter has 2 positive and 1 negative vote"} </code>
+                  </pre>
+                </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Both positive votes can’t be given to the same subject"} </code>
+                  </pre>
+                </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Negative vote can be used only after 2 positive votes"} </code>
+                  </pre>
+                </h1>
+              </div>
             </div>
           </div>
         </h4>

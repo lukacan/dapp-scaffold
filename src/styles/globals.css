@@ -29,5 +29,19 @@ a {
   background-color: #707070;
 }
 
+.typing-animation h1{
+  font-size: 12px;
+  overflow: hidden; /* hide overflowing text */
+  white-space: nowrap; /* keep text in one line */
+  width: 0; /* start with zero width */
+  animation: typing 2s steps(40, end) forwards; /* start the animation */
+}
 
-
+@keyframes typing {
+  0% {
+    width: 0; /* start with zero width */
+  }
+  100% {
+    width: 100%; /* end with full width */
+  }
+}
