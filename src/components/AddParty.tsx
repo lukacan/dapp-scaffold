@@ -78,7 +78,7 @@ export const CreateParty: FC = () => {
         <>
             <h4 className="text-1x1 md:text-1xl text-center text-slate-300 my-2">
                 <div className="relative group">
-                    <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-50 animate-tilt"></div>
                     <div className="mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
                         <div className="typing-animation">
                             <h1>
@@ -98,9 +98,9 @@ export const CreateParty: FC = () => {
                     onChange={(e) => setPartyName(e.target.value)}
                 />
                 <div className="relative group items-center">
-                    <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-fuchsia-500 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                    <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                     <button
-                        className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
+                        className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-emerald-400 hover:from-white hover:to-purple-300 text-black"
                         onClick={createParty} disabled={!ourWallet.publicKey || !partyName}
                     >
                         {!createdParty && !ourWallet.publicKey &&

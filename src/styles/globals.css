@@ -9,16 +9,13 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   background-image: radial-gradient(
-    circle farthest-side at 50% 100%,rgba(1, 9, 18, 0),
-    rgba(1, 6, 14, 0.6) 36%,
-    rgba(1, 14, 29, 0.6) 55%,
-    rgba(49, 18, 93, 0.4));
+    circle farthest-side at 50% 100%,
+    rgba(56, 189, 248, 0.15),
+    rgba(56, 189, 248,0.1) 36%,
+    rgba(56, 189, 248, 0.05) 55%,
+    rgba(56, 248, 188, .05));
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
 
 * {
   box-sizing: border-box;
@@ -44,4 +41,10 @@ a {
   100% {
     width: 100%; /* end with full width */
   }
+}
+
+
+
+.btn{
+  color: black !important;
 }

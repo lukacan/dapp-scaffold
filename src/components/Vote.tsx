@@ -6,7 +6,7 @@ import { FC, useCallback, useState } from 'react';
 import { notify } from "../utils/notifications";
 import * as assert from "assert";
 
-import { Program, AnchorProvider, web3, utils, AnchorError } from "@project-serum/anchor"
+import { Program, AnchorProvider, web3, utils, AnchorError, BN } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
 import { PublicKey } from '@solana/web3.js';
 
@@ -128,6 +128,7 @@ export const Vote: FC = () => {
     }
 
     const voteNegative = async (name) => {
+        
         console.log("Voting Negative")
 
         const provider = getProvider()
@@ -156,8 +157,8 @@ export const Vote: FC = () => {
             setVotedN("Voted")
         } catch (error) {
             if (error instanceof AnchorError) {
-                setVotedN((error as AnchorError)
-                    .error.errorMessage)
+                // setVotedN((error as AnchorError)
+                //     .error.errorMessage)
             }
             else {
                 console.log(error)
@@ -170,27 +171,73 @@ export const Vote: FC = () => {
         }, 2000);
     }
 
+    const intToDate = (party) => {
+        const date = new Date(party.created.toNumber() * 1000)
+        return date
+    }
 
 
     return (
-        <>
-
-
+        <><h4 className="text-1x1 md:text-1xl text-center text-slate-300 my-2">
+            <div className="relative group">
+                <div className="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-50 animate-tilt"></div>
+                <div className="mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
+                    <div className="typing-animation">
+                        <h1>
+                            <pre data-prefix=">">
+                                <code className="truncate">{"List all registered parties or find party by name"} </code>
+                            </pre>
+                            <pre data-prefix=">">
+                                <code className="truncate">{"Then, you can apply your votes"} </code>
+                            </pre>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </h4>
+            <div className="flex flex-row justify-center">
+                <div className="relative group items-center">
+                    <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                    <button
+                        className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-emerald-400 hover:from-white hover:to-purple-300 text-black"
+                        onClick={listParties}
+                    >
+                        <code className="truncate">{"List all parties"} </code>
+                    </button>
+                </div>
+                <input
+                    type="text"
+                    className="w-60 m-2 p-1 border-2 border-gray-300 rounded-lg text-black"
+                    value={partyName}
+                    onChange={(e) => setPartyName(e.target.value)}
+                />
+                <div className="relative group items-center">
+                    <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                    <button
+                        className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-emerald-400 hover:from-white hover:to-purple-300 text-black"
+                        onClick={listParty} disabled={!partyName}
+                    >
+                        {partyName ? (<code className="truncate">{"Find party"} </code>) :
+                            (<code className="truncate">{"Enter party name"} </code>)
+                        }
+                    </button>
+                </div>
+            </div>
             {parties.map((party) => {
                 return (
                     <div className='md:hero-content flex flex-col'>
                         <div className="relative group">
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-50 animate-tilt"></div>
                             <div className="mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
                                 <div className="typing-animation">
                                     <h1>
                                         <pre data-prefix=">">
-                                            <code className="truncate">{"Party name: " + party.name.toString()} </code>
+                                            <code className="truncate">{"Name: " + party.name.toString()} </code>
                                         </pre>
                                     </h1>
                                     <h1>
                                         <pre data-prefix=">">
-                                            <code className="truncate">{"Party owner: " + party.author.toString()} </code>
+                                            <code className="truncate">{"Owner: " + party.author.toString()} </code>
                                         </pre>
                                     </h1>
                                     <h1>
@@ -198,97 +245,60 @@ export const Vote: FC = () => {
                                             <code className="truncate">{"Votes: " + party.votes.toString()} </code>
                                         </pre>
                                     </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Created: " + intToDate(party)} </code>
+                                        </pre>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
 
                         <div className="flex flex-row justify-center">
-                            <button
-                                className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
-                                onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
-                            >
-                                {!voted_p && !ourWallet.publicKey && (
-                                    <pre data-prefix=">">
+                            <div className="relative group items-center">
+                                <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-lime-600 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                                <button
+                                    className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-lime-600 text-black"
+                                    onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
+                                >
+                                    {!voted_p && !ourWallet.publicKey && (
                                         <code className="truncate">{"Wallet not connected"} </code>
-                                    </pre>
-                                )}
-                                {!voted_p && ourWallet.publicKey && (
-                                    <pre data-prefix=">">
+
+                                    )}
+                                    {!voted_p && ourWallet.publicKey && (
                                         <code className="truncate">{"Vote Positive"} </code>
-                                    </pre>
-                                )}
-                                {voted_p && (
-                                    <pre data-prefix=">">
+                                    )}
+                                    {voted_p && (
                                         <code className="truncate">{`${voted_p}`} </code>
-                                    </pre>
-                                )}
-                            </button>
-                            <button
-                                className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
-                                onClick={() => voteNegative(party.name.toString())} disabled={!ourWallet.publicKey}
-                            >
-                                {!voted_n && !ourWallet.publicKey && (
-                                    <pre data-prefix=">">
-                                        <code className="truncate">{"Wallet not connected"} </code>
-                                    </pre>
-                                )}
-                                {!voted_n && ourWallet.publicKey && (
-                                    <pre data-prefix=">">
-                                        <code className="truncate">{"Vote Negative"} </code>
-                                    </pre>
-                                )}
-                                {voted_n && (
-                                    <pre data-prefix=">">
-                                        <code className="truncate">{`${voted_n}`} </code>
-                                    </pre>
-                                )}
-                            </button>
+                                    )}
+                                </button>
+                            </div>
+                            <div className="relative group items-center">
+                                <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-red-600 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                                <button
+                                    className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-red-600 text-black"
+                                    onClick={() => voteNegative(party.name.toString())} disabled={!ourWallet.publicKey}>
+                                    {!voted_n && !ourWallet.publicKey && (
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Wallet not connected"} </code>
+                                        </pre>
+                                    )}
+                                    {!voted_n && ourWallet.publicKey && (
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Vote Negative"} </code>
+                                        </pre>
+                                    )}
+                                    {voted_n && (
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{`${voted_n}`} </code>
+                                        </pre>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )
             })}
-            <div className="flex flex-row justify-center">
-                <div className="relative group items-center">
-                    <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-fuchsia-500 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-                    <button
-                        className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
-                        onClick={listParties}
-                    >
-                        <pre data-prefix=">">
-                            <code className="truncate">{"List all parties"} </code>
-                        </pre>
-                    </button>
-                </div>
-            </div>
-            <div className="flex flex-row justify-center">
-                <input
-                    type="text"
-                    className="w-60 m-2 p-1 border-2 border-gray-300 rounded-lg text-black"
-                    value={partyName}
-                    onChange={(e) => setPartyName(e.target.value)}
-                />
-            </div>
-            <div className="flex flex-row justify-center">
-                <div className="relative group items-center">
-                    <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-fuchsia-500 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
-
-                    <button
-                        className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-indigo-500 to-fuchsia-500 hover:from-white hover:to-purple-300 text-black"
-                        onClick={listParty} disabled={!partyName}
-                    >
-                        {!partyName && (
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Enter party name"} </code>
-                            </pre>
-                        )}
-                        {partyName && (
-                            <pre data-prefix=">">
-                                <code className="truncate">{"Find party"} </code>
-                            </pre>
-                        )}
-                    </button>
-                </div>
-            </div>
         </>
 
     );

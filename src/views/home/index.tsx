@@ -5,9 +5,6 @@ import Link from 'next/link';
 // Wallet
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
-// Components
-import { RequestAirdrop } from '../../components/RequestAirdrop';
-import pkg from '../../../package.json';
 
 // Store
 import useUserSOLBalanceStore from '../../stores/useUserSOLBalanceStore';
@@ -32,13 +29,13 @@ export const HomeView: FC = ({ }) => {
       <div className="md:hero-content flex flex-col">
         <div className='mt-7'>
           <div className='font-normal align-top text-right text-slate-600 mt-5'></div>
-          <h1 className="text-center text-6xl md:pl-13 font-bold text-transparent bg-clip-text bg-gradient-to-br from-indigo-500 to-fuchsia-500 mb-10">
+          <h1 className="text-center text-6xl md:pl-13 font-bold text-transparent bg-clip-text bg-gradient-to-br from-sky-400 to-emerald-400 mb-10">
             Janecek Method
           </h1>
         </div>
         <h4 className="text-1x1 md:text-1xl text-center text-slate-300 my-2">
           <div className="relative group">
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-indigo-500 rounded-lg blur opacity-50 animate-tilt"></div>
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-50 animate-tilt"></div>
             <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
               <div className="typing-animation">
                 <h1>
