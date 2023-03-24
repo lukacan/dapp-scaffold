@@ -1,10 +1,8 @@
 // TODO: SignMessage
-import { verify } from '@noble/ed25519';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import bs58 from 'bs58';
-import { FC, useCallback, useState } from 'react';
-import { notify } from "../utils/notifications";
-import * as assert from "assert";
+import { FC, useState } from 'react';
+import { sha256 } from "js-sha256"
 
 import { Program, AnchorProvider, web3, utils, AnchorError, BN } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
@@ -38,14 +36,16 @@ export const Vote: FC = () => {
             const provider = getProvider()
             const program = new Program(idl_object, programID, provider)
 
-            // check na velkost structu mi pride trochu ehm
-            // asi by to chcelo lepsi check
+            // check 8 byte discriminator
+            const discriminator = Buffer.from(sha256.digest("account:Party")).subarray(0, 8)
             Promise.all((await connection.getProgramAccounts(programID,
                 {
-                    filters: [
-                        {
-                            dataSize: 189,
-                        },
+                    filters: [{
+                            memcmp:{
+                                offset: 0,
+                                bytes: bs58.encode(discriminator)
+                            }
+                        }
                     ],
                 })).map(async party => ({
                     ...(await program.account.party.fetch(party.pubkey)),
@@ -66,7 +66,7 @@ export const Vote: FC = () => {
             const program = new Program(idl_object, programID, provider)
 
 
-            const [party, bump] = await PublicKey.findProgramAddressSync([
+            const [party] = await PublicKey.findProgramAddressSync([
                 utils.bytes.utf8.encode(partyName),
             ], program.programId)
 
@@ -90,18 +90,18 @@ export const Vote: FC = () => {
         const provider = getProvider()
         const program = new Program(idl_object, programID, provider)
 
-        const [party, bump] = await PublicKey.findProgramAddressSync([
+        const [party] = await PublicKey.findProgramAddressSync([
             utils.bytes.utf8.encode(name),
         ], program.programId)
 
         try {
-            const [voter, bump] = await PublicKey.findProgramAddressSync([
+            const [voter] = await PublicKey.findProgramAddressSync([
                 utils.bytes.utf8.encode("new_voter"),
                 provider.wallet.publicKey.toBytes()
             ], program.programId)
 
 
-            await program.rpc.votePositive({
+            await program.rpc.votePositive(name,{
                 accounts: {
                     voter: voter,
                     author: provider.wallet.publicKey,
@@ -139,13 +139,13 @@ export const Vote: FC = () => {
         ], program.programId)
 
         try {
-            const [voter, bump] = await PublicKey.findProgramAddressSync([
+            const [voter] = await PublicKey.findProgramAddressSync([
                 utils.bytes.utf8.encode("new_voter"),
                 provider.wallet.publicKey.toBytes()
             ], program.programId)
 
 
-            await program.rpc.voteNegative({
+            await program.rpc.voteNegative(name,{
                 accounts: {
                     voter: voter,
                     author: provider.wallet.publicKey,
@@ -157,8 +157,8 @@ export const Vote: FC = () => {
             setVotedN("Voted")
         } catch (error) {
             if (error instanceof AnchorError) {
-                // setVotedN((error as AnchorError)
-                //     .error.errorMessage)
+                setVotedN((error as AnchorError)
+                    .error.errorMessage)
             }
             else {
                 console.log(error)
@@ -292,6 +292,24 @@ export const Vote: FC = () => {
                                         <pre data-prefix=">">
                                             <code className="truncate">{`${voted_n}`} </code>
                                         </pre>
+                                    )}
+                                </button>
+                            </div>
+                            <div className="relative group items-center">
+                                <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-lime-600 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+                                <button
+                                    className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-emerald-400 hover:from-white hover:to-purple-300 text-black"
+                                    onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
+                                >
+                                    {!voted_p && !ourWallet.publicKey && (
+                                        <code className="truncate">{"Wallet not connected"} </code>
+
+                                    )}
+                                    {!voted_p && ourWallet.publicKey && (
+                                        <code className="truncate">{"Donate"} </code>
+                                    )}
+                                    {voted_p && (
+                                        <code className="truncate">{`${voted_p}`} </code>
                                     )}
                                 </button>
                             </div>

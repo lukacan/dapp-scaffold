@@ -27,6 +27,7 @@ body {
 }
 
 .typing-animation h1{
+  line-height: 1.5;
   font-size: 12px;
   overflow: hidden; /* hide overflowing text */
   white-space: nowrap; /* keep text in one line */
@@ -48,3 +49,29 @@ body {
 .btn{
   color: black !important;
 }
+
+.code{
+  font-size: 12px;
+  font-family: courier, monospace;
+}
+
+input[type="text"]
+{
+    font-size:12px;
+    font-family: courier, monospace;
+    outline: none;
+    border-top: transparent;
+    border-left: transparent;
+    border-right: transparent;
+    box-shadow: none;
+}
+
+.message{
+  outline: none;
+  border-color: transparent;
+  box-shadow: none;
+  font-size: 12px;
+  font-family: courier, monospace;
+  line-height: 1.5;
+}
+

@@ -17,25 +17,19 @@ export const AppBar: React.FC = () => {
     <div>
       {/* NavBar / Header */}
       <div className="navbar flex h-15 flex-row md:mb-2 shadow-lg bg-black text-neutral-content border-b border-emerald-400 bg-opacity-66">
-        <div className="navbar-start">
-        </div>
-
-        {/* Nav Links */}
-        {/* Wallet & Settings */}
-        <div className="navbar-end">
           <div className="hidden md:inline-flex align-items-center justify-items gap-6">
+          <NavElement
+            label="Home"
+            href="/"
+            navigationStarts={() => setIsNavOpen(false)}
+          />
             <NavElement
-              label="Home"
-              href="/"
-              navigationStarts={() => setIsNavOpen(false)}
-            />
-            <NavElement
-              label="Vote"
+              label="List parties"
               href="/vote"
               navigationStarts={() => setIsNavOpen(false)}
             />
             <NavElement
-              label="Add Party"
+              label="Create Party"
               href="/addparty"
               navigationStarts={() => setIsNavOpen(false)}
             />
@@ -46,13 +40,20 @@ export const AppBar: React.FC = () => {
               navigationStarts={() => setIsNavOpen(false)}
             />
             <NavElement
-              label="Voter"
+              label="Voter stats"
               href="/listvoter"
               navigationStarts={() => setIsNavOpen(false)}
             />
-            <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6 " />
+            <NavElement
+              label="Socials"
+              href="/socials"
+              navigationStarts={() => setIsNavOpen(false)}
+            />
           </div>
-        </div>
+          <div className='flex ml-auto'>
+          <WalletMultiButtonDynamic className="btn-ghost btn-sm rounded-btn text-lg mr-6" />
+
+          </div>
       </div>
     </div>
   );

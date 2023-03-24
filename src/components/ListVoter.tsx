@@ -37,7 +37,7 @@ export const ListVoter: FC = () => {
             const program = new Program(idl_object, programID, provider)
 
 
-            const [voter, bump] = await PublicKey.findProgramAddressSync([
+            const [voter] = await PublicKey.findProgramAddressSync([
                 utils.bytes.utf8.encode("new_voter"),
                 provider.wallet.publicKey.toBytes()
             ], program.programId)
@@ -89,7 +89,7 @@ export const ListVoter: FC = () => {
                             <div className="typing-animation">
                                 <h1>
                                     <pre data-prefix=">">
-                                        <code className="truncate">{"Can vote: " + `${voterStats.canVote}`} </code>
+                                        <code className="truncate">{"Number of free votes: " + `${voterStats.numVotes}`} </code>
                                     </pre>
                                 </h1>
                                 <h1>
