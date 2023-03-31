@@ -36,7 +36,7 @@ export const HomeView: FC = ({ }) => {
         <h4 className="text-1x1 md:text-1xl text-center text-slate-300 my-2">
           <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-emerald-400 rounded-lg blur opacity-50 animate-tilt"></div>
-            <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 my-2 text-left">
+            <div className="max-w-md mx-auto mockup-code bg-primary border-2 border-[#5252529f] p-6 px-2 pr-8 my-2 text-left">
               <div className="typing-animation">
                 <h1>
                   <pre data-prefix=">">

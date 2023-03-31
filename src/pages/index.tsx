@@ -4,15 +4,32 @@ import { HomeView } from "../views";
 
 const Home: NextPage = (props) => {
   return (
-    <div>
-      <Head>
-        <title>Solana Scaffold</title>
-        <meta
-          name="description"
-          content="Solana Scaffold"
-        />
-      </Head>
-      <HomeView />
+    <div style={{
+      display: "flex",
+      height: "100%",
+    }}>
+      <div className="relative group"
+        style={{
+          flex: "1",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div id='show_bg_1'></div>
+      </div>
+      <div
+        style={{
+          flex: "1",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          textAlign: "center"
+        }}
+      >
+        <HomeView />
+      </div>
     </div>
   );
 };
