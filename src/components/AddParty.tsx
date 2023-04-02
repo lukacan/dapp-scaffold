@@ -1,7 +1,7 @@
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { FC, useState } from 'react';
 
-import { Program, AnchorProvider, web3, utils, AnchorError } from "@project-serum/anchor"
+import { Program, AnchorProvider, web3, utils } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
 import { PublicKey } from '@solana/web3.js';
 

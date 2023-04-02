@@ -3,9 +3,9 @@
 
 The Solana dApp Scaffold repos are meant to house good starting scaffolds for ecosystem developers to get up and running quickly with a front end client UI that integrates several common features found in dApps with some basic usage examples. Wallet Integration. State management. Components examples. Notifications. Setup recommendations.
 
-Responsive                     |  Desktop
+<!-- Responsive                     |  Desktop
 :-------------------------:|:-------------------------:
-![](scaffold-mobile.png)  |  ![](scaffold-desktop.png)
+![](scaffold-mobile.png)  |  ![](scaffold-desktop.png) -->
 
 ## Getting Started
 
@@ -83,45 +83,3 @@ style, package, configuration, and other project files
 
 ```
 
-## Contributing
-
-Anyone is welcome to create an issue to build, discuss or request a new feature or update to the existing code base. Please keep in mind the following when submitting an issue. We consider merging high value features that may be utilized by the majority of scaffold users. If this is not a common feature or fix, consider adding it to the component library or cookbook. Please refer to the project's architecture and style when contributing. 
-
-If submitting a feature, please reference the project structure shown above and try to follow the overall architecture and style presented in the existing scaffold.
-
-### Committing
-
-To choose a task or make your own, do the following:
-
-1. [Add an issue](https://github.com/solana-dev-adv/solana-dapp-next/issues/new) for the task and assign it to yourself or comment on the issue
-2. Make a draft PR referencing the issue.
-
-The general flow for making a contribution:
-
-1. Fork the repo on GitHub
-2. Clone the project to your own machine
-3. Commit changes to your own branch
-4. Push your work back up to your fork
-5. Submit a Pull request so that we can review your changes
-
-**NOTE**: Be sure to merge the latest from "upstream" before making a 
-pull request!
-
-You can find tasks on the [project board](https://github.com/solana-dev-adv/solana-dapp-next/projects/1) 
-or create an issue and assign it to yourself.
-
-
-## Learn More Next Js
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

@@ -1,18 +1,17 @@
 
 import { FC } from "react";
-import { CreateTweet } from '../../components/CreateTweet';
-import { ListTweets } from '../../components/ListTweets';
-import { MyTweets } from '../../components/MyTweets';
+import { ListVoter } from '../../components/ListVoter';
+import { AddVoter } from '../../components/AddVoter';
+import { Vote } from '../../components/Vote';
 
-
-export const CreateTweetView: FC = ({ }) => {
+export const ListVoterView: FC = ({ }) => {
 
   return (
     <div className="md:hero mx-auto p-5">
       <div className="md:hero-content flex flex-col">
         {/* CONTENT GOES HERE */}
         <div className="text-center">
-          <CreateTweet/>
+          <ListVoter/>
         </div>
       </div>
     </div>
@@ -20,15 +19,14 @@ export const CreateTweetView: FC = ({ }) => {
 };
 
 
-
-export const ListTweetsView: FC = ({ }) => {
+export const AddVoterView: FC = ({ }) => {
 
   return (
     <div className="md:hero mx-auto p-5">
       <div className="md:hero-content flex flex-col">
         {/* CONTENT GOES HERE */}
         <div className="text-center">
-          <ListTweets/>
+          <AddVoter/>
         </div>
       </div>
     </div>
@@ -36,14 +34,14 @@ export const ListTweetsView: FC = ({ }) => {
 };
 
 
-export const MyTweetsView: FC = ({ }) => {
+export const VoteView: FC = ({ }) => {
 
   return (
-    <div className="md:hero mx-auto p-5">
+    <div className="md:hero mx-auto p-4">
       <div className="md:hero-content flex flex-col">
         {/* CONTENT GOES HERE */}
         <div className="text-center">
-          <MyTweets/>
+          <Vote/>
         </div>
       </div>
     </div>

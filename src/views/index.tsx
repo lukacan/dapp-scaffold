@@ -1,6 +1,9 @@
 export { HomeView } from "./home";
-export { AddPartyView } from "./addparty";
-export { VoteView } from "./vote";
-export { AddVoterView } from "./addvoter";
-export { ListVoterView } from "./listvoter";
-export { SocialsView } from "./socials";
+export { AddPartyView,MyPartiesView } from "./party";
+export { VoteView, 
+        ListVoterView, 
+        AddVoterView } from "./voter";
+
+export { CreateTweetView,
+        ListTweetsView,
+        MyTweetsView } from "./socials";

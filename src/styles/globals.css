@@ -75,6 +75,8 @@ input[type="text"]
   line-height: 1.5;
 }
 
+
+
 #show_bg_1 {
   background-image:
   linear-gradient(to bottom, rgba(56, 189, 248, 0.12), rgba(52, 211, 153, 0.47)),
@@ -109,6 +111,17 @@ input[type="text"]
   background-image:
   linear-gradient(to bottom, rgba(56, 189, 248, 0.12), rgba(52, 211, 153, 0.47)),
   url('../../public/pic5.png');
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  color: white;
+}
+
+
+#show_bg_5 {
+  background-image:
+  linear-gradient(to bottom, rgba(56, 189, 248, 0.12), rgba(52, 211, 153, 0.47)),
+  url('../../public/pic6.png');
   width: 100%;
   height: 100%;
   background-size: cover;

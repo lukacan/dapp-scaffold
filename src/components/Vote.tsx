@@ -28,6 +28,7 @@ export const Vote: FC = () => {
             AnchorProvider.defaultOptions())
         return provider
     }
+    
 
     const listParties = async () => {
         try {
@@ -41,11 +42,11 @@ export const Vote: FC = () => {
             Promise.all((await connection.getProgramAccounts(programID,
                 {
                     filters: [{
-                            memcmp:{
-                                offset: 0,
-                                bytes: bs58.encode(discriminator)
-                            }
+                        memcmp: {
+                            offset: 0,
+                            bytes: bs58.encode(discriminator)
                         }
+                    }
                     ],
                 })).map(async party => ({
                     ...(await program.account.party.fetch(party.pubkey)),
@@ -86,7 +87,6 @@ export const Vote: FC = () => {
 
     const votePositive = async (name) => {
         console.log("Voting Positive")
-
         const provider = getProvider()
         const program = new Program(idl_object, programID, provider)
 
@@ -101,7 +101,7 @@ export const Vote: FC = () => {
             ], program.programId)
 
 
-            await program.rpc.votePositive(name,{
+            await program.rpc.votePositive(name, {
                 accounts: {
                     voter: voter,
                     author: provider.wallet.publicKey,
@@ -128,7 +128,7 @@ export const Vote: FC = () => {
     }
 
     const voteNegative = async (name) => {
-        
+
         console.log("Voting Negative")
 
         const provider = getProvider()
@@ -145,7 +145,7 @@ export const Vote: FC = () => {
             ], program.programId)
 
 
-            await program.rpc.voteNegative(name,{
+            await program.rpc.voteNegative(name, {
                 accounts: {
                     voter: voter,
                     author: provider.wallet.publicKey,
@@ -171,8 +171,8 @@ export const Vote: FC = () => {
         }, 2000);
     }
 
-    const intToDate = (party) => {
-        const date = new Date(party.created.toNumber() * 1000)
+    const intToDate = (number) => {
+        const date = new Date(number * 1000)
         return date
     }
 
@@ -247,7 +247,7 @@ export const Vote: FC = () => {
                                     </h1>
                                     <h1>
                                         <pre data-prefix=">">
-                                            <code className="truncate">{"Created: " + intToDate(party)} </code>
+                                            <code className="truncate">{"Created: " + intToDate(party.created.toNumber())} </code>
                                         </pre>
                                     </h1>
                                 </div>
@@ -260,7 +260,7 @@ export const Vote: FC = () => {
                                 <button
                                     className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-lime-600 text-black"
                                     onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
-                                >
+                                    name={party.pubkey.toString()}>
                                     {!voted_p && !ourWallet.publicKey && (
                                         <code className="truncate">{"Wallet not connected"} </code>
 
@@ -279,19 +279,13 @@ export const Vote: FC = () => {
                                     className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-red-600 text-black"
                                     onClick={() => voteNegative(party.name.toString())} disabled={!ourWallet.publicKey}>
                                     {!voted_n && !ourWallet.publicKey && (
-                                        <pre data-prefix=">">
-                                            <code className="truncate">{"Wallet not connected"} </code>
-                                        </pre>
+                                        <code className="truncate">{"Wallet not connected"} </code>
                                     )}
                                     {!voted_n && ourWallet.publicKey && (
-                                        <pre data-prefix=">">
-                                            <code className="truncate">{"Vote Negative"} </code>
-                                        </pre>
+                                        <code className="truncate">{"Vote Negative"} </code>
                                     )}
                                     {voted_n && (
-                                        <pre data-prefix=">">
-                                            <code className="truncate">{`${voted_n}`} </code>
-                                        </pre>
+                                        <code className="truncate">{`${voted_n}`} </code>
                                     )}
                                 </button>
                             </div>
@@ -299,17 +293,13 @@ export const Vote: FC = () => {
                                 <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-lime-600 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                                 <button
                                     className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-emerald-400 hover:from-white hover:to-purple-300 text-black"
-                                    onClick={() => votePositive(party.name.toString())} disabled={!ourWallet.publicKey}
                                 >
-                                    {!voted_p && !ourWallet.publicKey && (
+                                    {!ourWallet.publicKey && (
                                         <code className="truncate">{"Wallet not connected"} </code>
 
                                     )}
-                                    {!voted_p && ourWallet.publicKey && (
-                                        <code className="truncate">{"Donate"} </code>
-                                    )}
-                                    {voted_p && (
-                                        <code className="truncate">{`${voted_p}`} </code>
+                                    {ourWallet.publicKey && (
+                                        <code className="truncate">{"Donate (TO DO)"} </code>
                                     )}
                                 </button>
                             </div>
