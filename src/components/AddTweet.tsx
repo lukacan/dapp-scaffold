@@ -5,7 +5,6 @@ import { FC, useState } from 'react';
 import { Program, AnchorProvider, web3, utils, BN } from "@project-serum/anchor"
 import idl from "./janecek_method.json"
 import { PublicKey } from '@solana/web3.js';
-import { type } from 'os';
 
 
 const idl_string = JSON.stringify(idl)

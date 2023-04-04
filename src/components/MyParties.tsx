@@ -18,6 +18,7 @@ export const MyParties: FC = () => {
     const { connection } = useConnection();
     const [parties, setParties] = useState([])
     const [result, setResult] = useState("")
+    const [result_, setResult_] = useState("")
 
 
     const getProvider = () => {
@@ -62,12 +63,12 @@ export const MyParties: FC = () => {
         }
     }
 
-    const deleteMyParty = async (party_address) => {
+    const deleteMyParty = async (party_address, party_name) => {
         try {
             const provider = getProvider()
             const program = new Program(idl_object, programID, provider)
 
-            await program.rpc.deleteParty({
+            await program.rpc.deleteParty(party_name, {
                 accounts: {
                     author: provider.wallet.publicKey,
                     party: party_address,
@@ -75,12 +76,35 @@ export const MyParties: FC = () => {
                 }
 
             })
+            setResult("Party deleted")
         } catch (error) {
             console.error(error)
             setResult("Something went wrong")
         }
         setTimeout(() => {
             setResult('');
+        }, 2000);
+    }
+    const startVoting = async (party_address, party_name) => {
+        try {
+            const provider = getProvider()
+            const program = new Program(idl_object, programID, provider)
+
+            await program.rpc.startVoting(party_name, {
+                accounts: {
+                    author: provider.wallet.publicKey,
+                    party: party_address,
+                    systemProgram: web3.SystemProgram.programId,
+                }
+
+            })
+            setResult_("Voting started")
+        } catch (error) {
+            console.error(error)
+            setResult_("Something went wrong")
+        }
+        setTimeout(() => {
+            setResult_('');
         }, 2000);
     }
 
@@ -151,6 +175,16 @@ export const MyParties: FC = () => {
                                             <code className="truncate">{"Created: " + intToDate(party.created.toNumber())} </code>
                                         </pre>
                                     </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Voting started: " + party.votingStarted} </code>
+                                        </pre>
+                                    </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Voting ends: " + intToDate(party.votingEnds.toNumber())} </code>
+                                        </pre>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +194,7 @@ export const MyParties: FC = () => {
                                 <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-red-600 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
                                 <button
                                     className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-red-600 text-black"
-                                    onClick={() => deleteMyParty(party.pubkey.toString())} disabled={!ourWallet.publicKey}
+                                    onClick={() => deleteMyParty(party.pubkey.toString(), party.name.toString())} disabled={!ourWallet.publicKey}
                                 >
                                     {!ourWallet.publicKey && (
                                         <code className="truncate">{"Wallet not connected"} </code>
@@ -170,6 +204,25 @@ export const MyParties: FC = () => {
                                     )}
                                     {result && (
                                         <code className="truncate">{`${result}`} </code>
+                                    )}
+
+                                </button>
+                            </div>
+                            <div className="relative group items-center">
+                                <div className="m-1 absolute -inset-0.5 bg-gradient-to-r from-sky-400 to-lime-600 rounded-lg blur opacity-20 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-tilt"></div>
+
+                                <button
+                                    className="group w-60 m-2 btn animate-pulse bg-gradient-to-br from-sky-400 to-lime-600 text-black"
+                                    onClick={() => startVoting(party.pubkey.toString(), party.name.toString())} disabled={!ourWallet.publicKey}
+                                >
+                                    {!ourWallet.publicKey && (
+                                        <code className="truncate">{"Wallet not connected"} </code>
+                                    )}
+                                    {!result_ && ourWallet.publicKey && (
+                                        <code className="truncate">{"Start Voting"} </code>
+                                    )}
+                                    {result_ && (
+                                        <code className="truncate">{`${result_}`} </code>
                                     )}
 
                                 </button>

@@ -28,7 +28,7 @@ export const Vote: FC = () => {
             AnchorProvider.defaultOptions())
         return provider
     }
-    
+
 
     const listParties = async () => {
         try {
@@ -67,7 +67,7 @@ export const Vote: FC = () => {
             const program = new Program(idl_object, programID, provider)
 
 
-            const [party] = await PublicKey.findProgramAddressSync([
+            const [party, _] = await PublicKey.findProgramAddressSync([
                 utils.bytes.utf8.encode(partyName),
             ], program.programId)
 
@@ -248,6 +248,16 @@ export const Vote: FC = () => {
                                     <h1>
                                         <pre data-prefix=">">
                                             <code className="truncate">{"Created: " + intToDate(party.created.toNumber())} </code>
+                                        </pre>
+                                    </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Voting started: " + party.votingStarted} </code>
+                                        </pre>
+                                    </h1>
+                                    <h1>
+                                        <pre data-prefix=">">
+                                            <code className="truncate">{"Voting ends: " + intToDate(party.votingEnds.toNumber())} </code>
                                         </pre>
                                     </h1>
                                 </div>

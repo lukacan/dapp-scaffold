@@ -1,6 +1,6 @@
 
 import { FC } from "react";
-import { CreateTweet } from '../../components/CreateTweet';
+import { CreateTweet } from '../../components/AddTweet';
 import { ListTweets } from '../../components/ListTweets';
 import { MyTweets } from '../../components/MyTweets';
 

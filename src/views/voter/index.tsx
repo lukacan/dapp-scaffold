@@ -2,7 +2,7 @@
 import { FC } from "react";
 import { ListVoter } from '../../components/ListVoter';
 import { AddVoter } from '../../components/AddVoter';
-import { Vote } from '../../components/Vote';
+import { Vote } from '../../components/ListParties';
 
 export const ListVoterView: FC = ({ }) => {
 

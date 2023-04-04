@@ -29,7 +29,7 @@
       ]
     },
     {
-      "name": "deleteParty",
+      "name": "startVoting",
       "accounts": [
         {
           "name": "author",
@@ -47,7 +47,38 @@
           "isSigner": false
         }
       ],
-      "args": []
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "deleteParty",
+      "accounts": [
+        {
+          "name": "author",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "party",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "name",
+          "type": "string"
+        }
+      ]
     },
     {
       "name": "createVoter",
@@ -223,7 +254,7 @@
       "accounts": [
         {
           "name": "author",
-          "isMut": false,
+          "isMut": true,
           "isSigner": true
         },
         {
@@ -252,6 +283,14 @@
           },
           {
             "name": "created",
+            "type": "i64"
+          },
+          {
+            "name": "votingStarted",
+            "type": "bool"
+          },
+          {
+            "name": "votingEnds",
             "type": "i64"
           },
           {
@@ -369,6 +408,26 @@
       "code": 6006,
       "name": "EmptyInput",
       "msg": "Empty input"
+    },
+    {
+      "code": 6007,
+      "name": "VotingAlreadyStarted",
+      "msg": "Voting already started"
+    },
+    {
+      "code": 6008,
+      "name": "VotingNotStartedYet",
+      "msg": "Voting not started yet"
+    },
+    {
+      "code": 6009,
+      "name": "VotingAlreadyEnded",
+      "msg": "Voting already ended"
+    },
+    {
+      "code": 6010,
+      "name": "CantDeleteDuringVoting",
+      "msg": "Can`t delete party after voting started"
     }
   ],
   "metadata": {

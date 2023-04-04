@@ -20,7 +20,8 @@ export const MyTweets: FC = () => {
     const [content, setContent] = useState('');
 
     const [tweets, setTweets] = useState([])
-    const [result, setResult] = useState("")
+    const [resultDel, setResultDel] = useState("")
+    const [resultUpd, setResultUpd] = useState("")
 
 
     const getProvider = () => {
@@ -68,7 +69,10 @@ export const MyTweets: FC = () => {
     }
 
     const updateTweet = async () => {
-
+        setResultUpd("Not Done yet")
+        setTimeout(() => {
+            setResultUpd('');
+        }, 2000);
     }
 
     const deleteMyTweet = async (tweet_address) => {
@@ -86,14 +90,14 @@ export const MyTweets: FC = () => {
                 }
 
             })
-            setResult("Successfuly deleted")
+            setResultDel("Successfuly deleted")
         } catch (error) {
             console.error(error)
-            setResult("Something went wrong")
+            setResultDel("Something went wrong")
         }
 
         setTimeout(() => {
-            setResult('');
+            setResultDel('');
         }, 2000);
     }
 
@@ -201,14 +205,18 @@ export const MyTweets: FC = () => {
                                         <code className="truncate">{"Wallet not connected"} </code>
 
                                     )}
-                                    {ourWallet.publicKey && (content || topic) && (
+                                    {!resultUpd && ourWallet.publicKey && (content || topic) && (
                                         <code className="truncate">{"Update Tweet"} </code>
 
                                     )}
-                                    {ourWallet.publicKey && (!content && !topic) && (
+                                    {!resultUpd && ourWallet.publicKey && (!content && !topic) && (
                                         <code className="truncate">{"Fill Topic/Tweet or Both"} </code>
 
                                     )}
+                                    {resultUpd && (
+                                        <code className="truncate">{`${resultUpd}`} </code>
+                                    )}
+
                                 </button>
                             </div>
 
@@ -221,11 +229,11 @@ export const MyTweets: FC = () => {
                                     {!ourWallet.publicKey && (
                                         <code className="truncate">{"Wallet not connected"} </code>
                                     )}
-                                    {!result && ourWallet.publicKey && (
+                                    {!resultDel && ourWallet.publicKey && (
                                         <code className="truncate">{"Delete Tweet"} </code>
                                     )}
-                                    {result && (
-                                        <code className="truncate">{`${result}`} </code>
+                                    {resultDel && (
+                                        <code className="truncate">{`${resultDel}`} </code>
                                     )}
 
                                 </button>
