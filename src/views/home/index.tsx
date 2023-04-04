@@ -54,6 +54,11 @@ export const HomeView: FC = ({ }) => {
                     <code className="truncate">{"Negative vote can be used only after 2 positive votes"} </code>
                   </pre>
                 </h1>
+                <h1>
+                  <pre data-prefix=">">
+                    <code className="truncate">{"Voting ends 7 days after voting started"} </code>
+                  </pre>
+                </h1>
               </div>
             </div>
           </div>

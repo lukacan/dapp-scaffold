@@ -172,8 +172,13 @@ export const Vote: FC = () => {
     }
 
     const intToDate = (number) => {
-        const date = new Date(number * 1000)
-        return date
+        if (number == 0){
+            return "Voting not started yet"
+        }else
+        {
+            const date = new Date(number * 1000)
+            return date
+        }
     }
 
 
